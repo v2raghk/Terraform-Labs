@@ -1,0 +1,81 @@
+
+Create an Azure Storage Account using Terraform
+
+Overview
+
+    This tutorial will show the details about creating an Azure Storage Account using Terraform.
+
+Prerequisites
+
+    •	Terraform installed
+    •	Azure CLI installed
+    •	Azure account with sufficient permissions (e.g., Contributor)
+    •	Authenticated to Azure using Service Principal or az login
+
+Step 1: Create a Folder
+
+    Create a folder named “azure storage” on C drive on Windows laptop.
+
+Step 2: Create Terraform Config File
+
+    Under the folder, create a file named main.tf with the following terraform code:
+    
+    provider "azurerm" {
+      features {}
+    }
+    
+    resource "azurerm_resource_group" "rg" {
+      name     = "rg-storage-demo"
+      location = "West Europe"
+    }
+    
+    resource "azurerm_storage_account" "storage" {
+      name                     = "storagedemo1234" # Give a unique name globally
+      resource_group_name      = azurerm_resource_group.rg.name
+      location                 = azurerm_resource_group.rg.location
+      account_tier             = "Standard"
+      account_replication_type = "LRS"
+    
+      tags = {
+        environment = "demo"
+      }
+    }
+
+Step 3: Initialize Terraform
+
+    Open command prompt and go to C:/azure storage and run the following command:
+
+  terraform init
+
+Step 4: Preview the Plan
+
+    Next, run the following command from command prompt:
+
+    terraform plan
+
+Step 5: Apply Terraform Config
+
+    Next, run the following command from command prompt: 
+
+    terraform apply
+    
+    Type yes when prompted.
+
+Step 6: Verify in Azure Portal
+
+    Go to https://portal.azure.com. Navigate to Resource Groups => rg-storage-demo
+
+    We will see Storage Account storagedemo1234 in Azure.
+
+Step 7: Clean Up Resources (Optional)
+
+    If you are in the testing environment, delete your resources to prevent any charges in Azure by running the command below:
+
+    terraform destroy
+
+Notes
+
+      •	Storage account name must be globally unique and all lowercase (3–24 characters).
+      •	account_tier: Options are Standard or Premium.
+      •	account_replication_type: Common options include LRS, GRS, etc.
+
