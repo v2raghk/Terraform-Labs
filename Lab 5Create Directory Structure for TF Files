@@ -1,0 +1,39 @@
+Lab 5: Create Storage Container and Blob
+
+      In this lab, we will see how to split main.tf file to multiple files to store the code for simplicity.
+      I am using the following TF files and in next labs, we will use the code in these specific files.
+      
+      A clean and modular directory structure for Terraform (.tf) files is crucial for managing infrastructure at scale. 
+      Below is a recommended directory layout, suitable for medium to large projects, following best practices:
+  
+      Providers.tf    # Store the details of Azure Provider
+      Backend.tf      # Store the details of remote backend created in Azure
+      Variables.tf    # Store the details of variables
+      rg.tf           # Store the details about resource group
+      storage_acc.tf  # Contain storage account details
+      vnet.tf         # Contain virtual network details
+      
+      Below is a high-level diagrammatic view of the directory structure to segregate different environments e.g. dev, staging, prod etc.
+
+      terraform-project/
+      ├── environments/
+
+      │   ├── dev/
+      │   │   ├── main.tf
+      │   │   ├── variables.tf
+      │   │   ├── terraform.tfvars
+      │   │   └── backend.tf
+
+      │   ├── staging/
+      │   │   ├── main.tf
+      │   │   ├── variables.tf
+      │   │   ├── terraform.tfvars
+      │   │   └── backend.tf
+
+      │   └── prod/
+      │       ├── main.tf
+      │       ├── variables.tf
+      │       ├── terraform.tfvars
+      │       └── backend.tf
+
+      
