@@ -7,10 +7,10 @@ Overview
 
 Prerequisites
 
-        •	Terraform installed
-        •	Azure CLI installed
-        •	Azure account with contributor access
-        •	Authenticated with Azure using a Service Principal (details given in the first tutorial in this repository).
+        #	Terraform installed
+        #	Azure CLI installed
+        #	Azure account with contributor access
+        #	Authenticated with Azure using a Service Principal (details given in the first tutorial in this repository).
 
 Step 1: Create a Directory on C Drive
 
@@ -33,24 +33,27 @@ Step 2: Create Terraform Config File
 
 Step 3: Initialize Terraform
 
-        terraform init 
-        Initializes the working directory and downloads Azure provider.
+       #  terraform init 
+
+        This command initializes the working directory and downloads Azure provider.
 
 Step 4: Preview Changes
 
-        terraform plan -out tfplan
+       # terraform plan -out tfplan
 
         Shows the details about what Terraform will do without making any changes and add teh changes to tfplan file.
         Review the changes and once approved, run terraform apply to make the changes in tfplan file.
 
 Step 5: Apply the Configuration
 
-       terraform apply tfplan
-       Terraform will now create the resource group in Azure.
+       # terraform apply tfplan
+       
+        Terraform will now create the resource group in Azure.
 
 Step 6: Verify in Azure Portal
 
         Go to https://portal.azure.com.
+        
         Navigate to Resource groups.
         We will see rg-tf-demo created in West Europe region.
 
@@ -60,12 +63,14 @@ Step 7 (Optional): Destroy the Resource Group
         If you are creting the resources for testing, always delete the resources to prevent any costs in Azure. 
         To delete the resource group we created, run:
         
-        terraform destroy
+     #   terraform destroy
+
+        Caution: Use terraform destroy carefully as it will delete the workloads.
 
 Tips
 
-        •	You can parameterize the location and name using variables in variables.tf for reusability.
-        •	Always commit your .tf files to a version control system like GitHub.
-        •	Never hardcode secrets in .tf files. Use environment variables.
+        #	You can parameterize the location and name using variables in variables.tf for reusability.
+        #	Always commit your .tf files to a version control system like GitHub.
+        #	Never hardcode secrets in .tf files. Use environment variables.
 
 
