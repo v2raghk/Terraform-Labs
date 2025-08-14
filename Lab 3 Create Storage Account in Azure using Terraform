@@ -6,10 +6,10 @@ Overview
 
 Prerequisites
 
-        •	Terraform installed
-        •	Azure CLI installed
-        •	Azure account with sufficient permissions (e.g., Contributor)
-        •	Authenticated to Azure using Service Principal or az login
+        #	Terraform installed
+        #	Azure CLI installed
+        #	Azure account with sufficient permissions (e.g., Contributor)
+        #	Authenticated to Azure using Service Principal or az login
 
 Step 1: Create a Folder
 
@@ -43,17 +43,20 @@ Step 2: Create Terraform Config File
 Step 3: Initialize Terraform
 
         Open command prompt and go to C:/azure storage and run the following command:
-        terraform init
+        
+        # terraform init
 
 Step 4: Preview the Plan
 
         Next, run the following command from command prompt:
-        terraform plan
+        
+        # terraform plan
 
 Step 5: Apply Terraform Config
 
         Next, run the following command from command prompt: 
-        terraform apply
+        
+        # terraform apply
         
         Type yes when prompted.
 
@@ -66,11 +69,11 @@ Step 7: Clean Up Resources (Optional)
 
         If you are in the testing environment, delete your resources to prevent any charges in Azure by running the command below:
     
-        terraform destroy
+        # terraform destroy
 
 Notes
 
-          •	Storage account name must be globally unique and all lowercase (3–24 characters).
-          •	account_tier: Options are Standard or Premium.
-          •	account_replication_type: Common options include LRS, GRS, etc.
+          #	Storage account name must be globally unique and all lowercase (3–24 characters).
+          #	account_tier: Options are Standard or Premium.
+          #	account_replication_type: Common options include LRS, GRS, etc.
 
