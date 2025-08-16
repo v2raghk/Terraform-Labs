@@ -1,0 +1,66 @@
+Lab 6 Add Storage Container and Upload Blob
+
+In lab 3, we created a storage account. We will add a storage container and upload a blob in the container in this lab.
+
+Providers.tf =>
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "~>4.36.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  # Configuration options
+  features { }
+}
+ 
+Backend.tf =>
+
+terraform {
+    backend "azurerm" {
+    resource_group_name   = "rg-remotebackend"
+    storage_account_name  = "tfstateprod12343" 
+    container_name        = "tfstate"
+    key                   = "terraform.tfstate"
+  }
+}
+ 
+Rg.tf =>
+
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-prod"
+  location = "UK West"
+}
+ 
+Store.tf =>
+
+resource "azurerm_storage_account" "azstore" {
+name = "prodazstore101"
+resource_group_name = azurerm_resource_group.rg.name
+location = azurerm_resource_group.rg.location # implicit dependencies
+account_tier = "Standard"
+account_replication_type = "LRS"
+tags = {
+    environment = "staging"
+}
+}
+
+resource "azurerm_storage_container" "storecontainer" {
+  name                  = "storecontent"
+  storage_account_id    = azurerm_storage_account.azstore.id
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "storeblob" {
+  name                   = "my-content101.txt"
+  storage_account_name   = azurerm_storage_account.azstore.name
+  storage_container_name = azurerm_storage_container.storecontainer.name
+  type                   = "Block"
+  source                 = "blobupload.txt"
+}
+ 
+Note: We created a text file named "blobupload.txt" in terraform working directory. This will be uploaded to Azure.
