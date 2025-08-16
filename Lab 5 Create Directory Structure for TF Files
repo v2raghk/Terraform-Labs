@@ -36,4 +36,64 @@ Lab 5: Create Storage Container and Blob
       │       ├── terraform.tfvars
       │       └── backend.tf
 
+We will split main.tf into these files:
+
+•	Backend.tf
+•	Providers.tf
+•	Rg.tf
+•	Store.tf
+
+Providers.tf =>
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "~>4.36.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  # Configuration options
+  features { }
+}
+ 
+Backend.tf =>
+
+terraform {
+    backend "azurerm" {
+    resource_group_name   = "rg-remotebackend"
+    storage_account_name  = "tfstateprod12343" 
+    container_name        = "tfstate"
+    key                   = "terraform.tfstate"
+  }
+}
+ 
+Rg.tf =>
+
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-prod"
+  location = "UK West"
+}
+ 
+Store.tf => 
+
+resource "azurerm_storage_account" "azstore" {
+name = "prodazstore101"
+resource_group_name = azurerm_resource_group.rg.name
+location = azurerm_resource_group.rg.location # implicit dependencies
+account_tier = "Standard"
+account_replication_type = "LRS"
+tags = {
+    environment = "staging"
+}
+}
+ 
+Run terraform init
+RUn terraform plan
+Run terraform apply
+
+It wont make any changes as we haven’t modified any resource.
+
       
