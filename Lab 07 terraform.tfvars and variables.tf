@@ -1,4 +1,4 @@
-Lab 7 terraform.tfvars and variables.tf
+Lab 07 terraform.tfvars and variables.tf
 
 terraform.tfvars is a special file in Terraform where we can store values for the variables we define in variables.tf.
 Think of it like a "settings file" that tells Terraform what values to use.
