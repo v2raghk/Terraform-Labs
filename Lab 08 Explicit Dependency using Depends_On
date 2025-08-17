@@ -1,4 +1,4 @@
-Lab 8 Explicit Dependency using Depends On
+Lab 08 Explicit Dependency using Depends On
 
 In Terraform, depends_on is used to explicitly control the order in which resources are created or destroyed.
 By default, Terraform automatically figures out dependencies based on references. Example, if a storage account uses a resource group 
