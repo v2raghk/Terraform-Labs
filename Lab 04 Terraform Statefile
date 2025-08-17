@@ -1,4 +1,4 @@
-Lab 4: Terraform Statefile (Remote Backend)
+Lab 04: Terraform Statefile (Remote Backend)
 
     Terraform statefile is like Terraform’s memory. It keeps a record of what it created, updated, or deleted in your cloud provider. 
     When you make a change, it refers to that file and compare desired state (configuration in statefile) to the actual state (Resources created in Cloud) and make changes accordingly.
