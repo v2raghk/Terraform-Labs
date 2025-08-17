@@ -1,4 +1,4 @@
-Lab 5: Create Storage Container and Blob
+Lab 05: Create Storage Container and Blob
 
       In this lab, we will see how to split main.tf file to multiple files to store the code for simplicity.
       I am using the following TF files and in next labs, we will use the code in these specific files.
