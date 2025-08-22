@@ -1,5 +1,17 @@
 Lab 09 Create Virtual Network
 
+Folder Structure 
+
+Folder Structure
+
+tf-azure-project/
+├── backend.tf
+├── providers.tf
+├── rg.tf
+├── vnet.tf
+├── terraform.tfvars
+└── store.tf
+
 Providers.tf =>
 
 terraform {
