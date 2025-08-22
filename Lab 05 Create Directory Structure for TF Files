@@ -12,36 +12,16 @@ Lab 05: Create Storage Container and Blob
       rg.tf           # Store the details about resource group
       storage_acc.tf  # Contain storage account details
       vnet.tf         # Contain virtual network details
-      
-      Below is a high-level diagrammatic view of the directory structure to segregate different environments e.g. dev, staging, prod etc.
-
-      terraform-project/
-      ├── environments/
-
-      │   ├── dev/
-      │   │   ├── main.tf
-      │   │   ├── variables.tf
-      │   │   ├── terraform.tfvars
-      │   │   └── backend.tf
-
-      │   ├── staging/
-      │   │   ├── main.tf
-      │   │   ├── variables.tf
-      │   │   ├── terraform.tfvars
-      │   │   └── backend.tf
-
-      │   └── prod/
-      │       ├── main.tf
-      │       ├── variables.tf
-      │       ├── terraform.tfvars
-      │       └── backend.tf
 
 We will split main.tf into these files:
 
-•	Backend.tf
-•	Providers.tf
-•	Rg.tf
-•	Store.tf
+Folder Structure
+
+tf-azure-project/
+├── backend.tf
+├── providers.tf
+├── rg.tf
+└── store.tf
 
 Providers.tf =>
 
@@ -95,5 +75,3 @@ RUn terraform plan
 Run terraform apply
 
 It wont make any changes as we haven’t modified any resource.
-
-      
