@@ -11,11 +11,16 @@ Prerequisites
         #	Azure account with sufficient permissions (e.g., Contributor)
         #	Authenticated to Azure using Service Principal or az login
 
+Folder Structure
+
+tf-azure-rg/
+└── main.tf
+
 Step 1: Create a Folder
 
         Create a folder named “azure storage” on C drive on your laptop. We will be using a Windows laptop for this lab.
 
-Step 2: Create Terraform Config File
+Step 2: Create main.tf File
 
         Under the folder, create a file named main.tf with the following terraform code:
         
@@ -40,19 +45,15 @@ Step 2: Create Terraform Config File
           }
         }
 
-Step 3: Initialize Terraform
+Step 3: Initialize Terraform (terraform init)
 
         Open command prompt and go to C:/azure storage and run the following command:
         
-        # terraform init
+Step 4: Preview the Plan (terraform plan)
 
-Step 4: Preview the Plan
+        Next, run terraform plan command from command prompt.
 
-        Next, run the following command from command prompt:
-        
-        # terraform plan
-
-Step 5: Apply Terraform Config
+Step 5: Apply Terraform Config (
 
         Next, run the following command from command prompt: 
         
