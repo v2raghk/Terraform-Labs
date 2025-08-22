@@ -1,0 +1,201 @@
+Lab 11 Use Output Variables
+
+Output variables are used to export values from Terraform configuration so that they can be:
+
+•	Displayed to user after terraform apply.
+•	Used by other Terraform configurations or modules.
+•	Used in scripts or automation as environment variables.
+
+Think of output variables to “report” information about deployed infrastructure.
+
+Folder Structure:
+
+tf-azure-project/
+├── backend.tf
+├── providers.tf
+├── rg.tf
+├── vnet.tf
+├── outputs.tf
+├── terraform.tfvars
+└── store.tf
+
+Providers.tf
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "~>4.36.0"
+    }
+  }
+}
+provider "azurerm" {
+  # Configuration options
+  features { }
+}
+
+Backend.tf
+
+terraform {
+    backend "azurerm" {
+    resource_group_name   = "rg-remotebackend"
+    storage_account_name  = "tfstateprod12343" 
+    container_name        = "tfstate"
+    key                   = "terraform.tfstate"
+  }
+}
+
+Variables.tf
+
+variable "rgname" {
+  description = "Name of Resource Group"
+  type        = string
+}
+
+variable "location" {
+  description = "Azure region"
+  type        = string
+}
+
+variable "storage_account_name" {
+  description = "Name of Storage Account"
+  type        = string
+}
+
+variable "container_name" {
+  description = "Name of Blob Container"
+  type        = string
+}
+
+variable "storage_account_tier" {
+  description = "Storage account Tier (Standard or Premium)"
+  type        = string
+  default     = "Standard"
+}
+
+variable "storage_account_replication_type" {
+  description = "Replication type for storage account (LRS, GRS)"
+  type        = string
+  default     = "LRS"
+}
+
+variable "environment" {
+  description = "Environment tag for resources (dev, prod, staging)"
+  type        = string
+  default     = "staging"
+}
+
+variable "container_access_type" {
+  description = "Access type for blob container (private, blob, container)"
+  type        = string
+  default     = "private"
+}
+
+variable "blob_name" {
+  description = "Name of the blob file"
+  type        = string
+  default     = "example.txt"
+}
+
+variable "blob_type" {
+  description = "Type of blob: Block, Append, or Page"
+  type        = string
+  default     = "Block"
+}
+
+variable "blob_source" {
+  description = "Local path of the file to upload"
+  type        = string
+  default     = "C:/tflabs2/blobupload.txt"
+}
+
+variable "vnet_name" {
+  description = "Name of virtual network"
+  type        = string
+  default     = "my-vnet"
+}
+
+variable "vnet_address_space" {
+  description = "Address space for VNet"
+  type        = list(string)
+  default     = ["10.0.0.0/16"]
+}
+
+variable "vnet_dns_servers" {
+  description = "Custom DNS servers for VNet"
+  type        = list(string)
+  default     = ["10.0.0.4", "10.0.0.5"]
+}
+
+Vnet.tf
+
+resource "azurerm_virtual_network" "vnetprod" {
+
+  name                = var.vnet_name
+  location            = var.location
+  resource_group_name = var.rgname
+  address_space       = var.vnet_address_space
+  dns_servers         = var.vnet_dns_servers
+  subnet {
+    name             = "app-subnet"
+    address_prefixes = ["10.0.1.0/24"]
+  }
+
+  subnet {
+    name             = "db-subnet"
+    address_prefixes = ["10.0.2.0/24"]
+  }
+}
+
+Terraform.tfvars
+
+rgname                       		        	= "rg-prod"
+location                         		    	= "UK West"
+storage_account_name               	      = "prodazstore101"
+container_name                   	    	  = "storecontent"
+storage_account_tier                   	  = "Standard"
+storage_account_replication_type 	        = "LRS"
+environment                      		      = "staging"
+container_access_type           		      = "private"
+blob_name                        		      = "data.txt"
+blob_type                        		      = "Block"
+blob_source                      		      = "C:/<path>"
+vnet_name				                          = “VNET1”
+vnet_address_space			                  = [“10.0.0.0/16”]
+vnet_dns_servers			                    = [“10.0.0.4”, “10.0.0.05”]
+
+Outputs.tf
+
+output "storage_account_name" {
+  description = "Name of storage account"
+  value       = azurerm_storage_account.azstore.name
+}
+
+output "storage_account_primary_endpoint" {
+  description = "Primary endpoint of storage account"
+  value       = azurerm_storage_account.azstore.primary_blob_endpoint
+}
+
+output "storage_account_id" {
+  description = "Resource ID of storage account"
+  value       = azurerm_storage_account.azstore.id
+}
+
+Run Terraform apply. 
+
+It will not make any changes as we didn’t change anything. To view the outputs, do the following:
+
+View All Outputs
+
+# terraform output
+
+We can also view specific outputs:
+
+# $storageName = terraform output -raw storage_account_name
+# write-host “Storage Account Name: $storageName”
+
+We will see the following output:
+
+Storage Account Name: prodazurestore101
+
+
