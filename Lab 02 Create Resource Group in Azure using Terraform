@@ -12,11 +12,16 @@ Prerequisites
         #	Azure account with contributor access
         #	Authenticated with Azure using a Service Principal (details given in the first tutorial in this repository).
 
+Folder Structure
+
+tf-azure-rg/
+└── main.tf
+
 Step 1: Create a Directory on C Drive
 
         We are using Windows machine. So create a directory named tf-azure-rg on the root of C drive.
 
-Step 2: Create Terraform Config File
+Step 2: Create main.tf File
 
         In the directory, create a file named main.tf:
             Add the following contents to the file.
@@ -31,22 +36,17 @@ Step 2: Create Terraform Config File
           location = "West Europe"
         }
 
-Step 3: Initialize Terraform
-
-       #  terraform init 
+Step 3: Initialize Terraform (terraform init)
 
         This command initializes the working directory and downloads Azure provider.
 
-Step 4: Preview Changes
+Step 4: Preview Changes (terraform plan -out tfplan)
 
-       # terraform plan -out tfplan
+       Terraform plan shows the details about what Terraform will do without making any changes and add the changes to tfplan file.
+       We can use -out <Filename> to store the plan in a file which can then be reviewed by the team before making the changes. 
+       Review the changes and once approved, run terraform apply to make the changes in tfplan file.
 
-        Shows the details about what Terraform will do without making any changes and add teh changes to tfplan file.
-        Review the changes and once approved, run terraform apply to make the changes in tfplan file.
-
-Step 5: Apply the Configuration
-
-       # terraform apply tfplan
+Step 5: Apply the Configuration (terraform apply tfplan)
        
         Terraform will now create the resource group in Azure.
 
