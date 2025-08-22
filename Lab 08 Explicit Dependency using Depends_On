@@ -6,6 +6,15 @@ named azurerm_resource_group.rg.name, Terraform knows the resource group must be
 
 However, sometimes Terraform cannot automatically detect the dependency, or you want to enforce a strict order. That’s when depends_on comes in.
 
+Folder Structure
+
+tf-azure-project/
+├── backend.tf
+├── providers.tf
+├── rg.tf
+├── terraform.tfvars
+└── store.tf
+
 Below is the lab using explicit dependency depends_on
 
 Providers.tf => 
