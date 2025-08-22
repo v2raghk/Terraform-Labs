@@ -8,6 +8,15 @@ It is very useful as we can define inputs once in a single file. Instead of hard
 
 In this lab, we will define variables in variables.tf file and store the values for those variables in terraform.tfvars file.
 
+Folder Structure
+
+tf-azure-project/
+├── backend.tf
+├── providers.tf
+├── rg.tf
+├── terraform.tfvars
+└── store.tf
+
 Providers.tf =>
 
 terraform {
