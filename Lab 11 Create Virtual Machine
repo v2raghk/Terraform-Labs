@@ -1,0 +1,138 @@
+Lab 11 Create Virtual Machine
+
+# Backend.tf
+terraform {
+backend "azurerm" {
+    resource_group_name   = "rg-remotebackend"
+    storage_account_name  = "tfstateprod12343" 
+    container_name        = "tfstate"
+    key                   = "terraform.tfstate"
+   }
+}
+
+# Providers.tf
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "~>4.36.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  # Configuration options
+  features { }
+}
+
+# Variables.tf
+
+variable "resource_group_name" {
+  description = "Name of Resource Group"
+  type        = string
+  default = "winvm-rg"
+}
+
+variable "location" {
+  description = "Azure region"
+  type        = string
+  default = "UK West"
+}
+
+variable "virtual_machine_name" {
+  description = "Name of the Windows VM"
+  type        = string
+  default     = "winvm01"
+}
+
+variable "virtual_machine_size" {
+  description = "Size of the VM"
+  type        = string
+  default     = "Standard_B2s"
+}
+
+variable "admin_username" {
+  description = "Admin username for the Virtual Machine"
+  type        = string
+  default     = "azureuser"
+}
+
+variable "admin_password" {
+  description = "Admin password for the Virtual Machine"
+  type        = string
+  sensitive   = true
+}
+
+# Terraform.tfvars
+
+resource_group_name             = "winvm-rg"
+location                        = "UK West"
+virtual_machine_name            = "demovm01"
+virtual_machine_size            = "Standard_B2s"
+virtual_machine_size            = "Standard_B1s"
+virtual_machine_name            = "demovm01"
+admin_username                  = "azureuser"
+admin_password                  = "***"
+
+# Vm.tf
+
+resource "azurerm_windows_virtual_machine" "vm" {
+  name                  = var.virtual_machine_name
+  resource_group_name   = var.resource_group_name
+  location              = var.location
+  size                  = var.virtual_machine_size
+  admin_username        = var.admin_username
+  admin_password        = var.admin_password 
+  network_interface_ids = [azurerm_network_interface.nic.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
+    version   = "latest"
+  }
+}
+
+# Vnet.tf
+resource "azurerm_virtual_network" "vnet" {
+  name                = "winvm-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
+# Subnet
+resource "azurerm_subnet" "subnet" {
+  name                 = "winvm-subnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+# Public IP
+resource "azurerm_public_ip" "pip" {
+  name                = "winvm-pip"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = "Static"
+}
+
+# Network interface
+resource "azurerm_network_interface" "nic" {
+  name                = "winvm-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.pip.id
+   }
+}
+
