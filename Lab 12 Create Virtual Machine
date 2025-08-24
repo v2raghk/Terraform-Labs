@@ -1,4 +1,16 @@
-Lab 11 Create Virtual Machine
+Lab 12 Create Virtual Machine
+
+Folder Structure:
+
+tf-azure-project/
+├── backend.tf
+├── providers.tf
+├── rg.tf
+├── vnet.tf
+├── variables.tf
+├── outputs.tf
+├── terraform.tfvars
+└── vm.tf
 
 # Backend.tf
 terraform {
