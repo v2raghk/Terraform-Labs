@@ -1,0 +1,212 @@
+Lab 13 Create Linux Virtual Machine
+
+Directory Structure
+    Tf-demo-lab/
+    ├── main.tf
+    ├── variables.tf
+    ├── outputs.tf
+    ├── terraform.tfvars
+    ├── providers.tf
+    ├── backend.tf
+
+# providers.tf
+
+        terraform {
+          required_providers {
+            azurerm = {
+              source  = "hashicorp/azurerm"
+              version = "~>4.36.0"
+            }
+          }
+        }
+        
+        provider "azurerm" {
+          # Configuration options
+          features {}
+        }
+
+# backend.tf
+
+        terraform {
+          backend "azurerm" {
+            resource_group_name  = "rg-remotebackend"
+            storage_account_name = "tfstateprod12343"
+            container_name       = "tfstate"
+            key                  = "terraform.tfstate"
+          }
+        }
+
+# terraform.tfvars
+
+        resource_group_name = "tf-lab-rg"
+        location            = "UK West"
+        environment         = "dev"
+        vm_name             = "demo-vm"
+        vm_size             = "Standard_B1s"
+        tags = {
+                Project     = "TerraformLab"
+                Environment = "dev"
+        }
+        admin_username      = "<Define Username>"
+        admin_password      = "<Define Password>"
+        virtual_network_name = "VNET1"
+        subnet_name          = "dev-subnet"
+
+# main.tf
+
+        # Resource Group
+        resource "azurerm_resource_group" "rg" {
+          name     = var.resource_group_name
+          location = var.location
+          tags     = var.tags
+        }
+        
+        # Virtual Network
+        resource "azurerm_virtual_network" "vnet" {
+          name                = var.virtual_network_name
+          address_space       = ["10.0.0.0/16"]
+          location            = var.location
+          resource_group_name = var.resource_group_name
+          tags                = var.tags
+        }
+        
+        # Subnet
+        resource "azurerm_subnet" "subnet" {
+          name                 = var.subnet_name
+          resource_group_name  = var.resource_group_name
+          virtual_network_name = var.virtual_network_name
+          address_prefixes     = ["10.0.1.0/24"]
+        }
+        
+        # Public IP
+        resource "azurerm_public_ip" "pip" {
+          name                = "pip-vm"
+          location            = var.location
+          resource_group_name = var.resource_group_name
+          allocation_method   = "Static"
+        }
+        
+        # Network Interface
+        resource "azurerm_network_interface" "nic" {
+          name                = "vm-nic"
+          location            = var.location
+          resource_group_name = var.resource_group_name
+        
+          ip_configuration {
+            name                          = "internal"
+            subnet_id                     = azurerm_subnet.subnet.id
+            private_ip_address_allocation = "Dynamic"
+            public_ip_address_id          = azurerm_public_ip.pip.id
+          }
+        }
+
+# outputs.tf
+
+        output "resource_group_name" {
+          description = "The name of the resource group"
+          value       = azurerm_resource_group.rg.name
+        }
+        
+        output "vm_public_ip" {
+          description = "Public IP of the VM"
+          value       = azurerm_public_ip.pip.ip_address
+        }
+
+# variables.tf
+
+        variable "location" {
+          description = "Azure region to deploy resources"
+          type        = string
+          default     = "UK West"
+        }
+        
+        variable "resource_group_name" {
+          description = "Name of the resource group"
+          type        = string
+        }
+        
+        variable "environment" {
+          description = "Deployment environment"
+          type        = string
+          default     = "dev"
+        }
+        
+        variable "vm_name" {
+          description = "Name of the virtual machine"
+          type        = string
+          default     = "demo-vm"
+        }
+        
+        variable "vm_size" {
+          description = "Azure VM size"
+          type        = string
+          default     = "Standard_B1s"
+        }
+        
+        variable "tags" {
+          description = "Tags to assign to resources"
+          type        = map(string)
+          default     = {
+            Project     = "TerraformLab"
+            Environment = "dev"
+          }
+        }
+        
+        variable "admin_username" {
+          description = "User account"
+          type        = string
+          default     = "<USERNAME>"
+        }
+        
+        variable "admin_password" {
+          description = "Password"
+          type        = string
+          sensitive = true
+        }
+        
+        variable "virtual_network_name" {
+          description = "virtual network"
+          type        = string
+          default     = "VNET1"
+        }
+        
+        variable "subnet_name" {
+          description = "subnet"
+          type        = string
+          default     = "dev-subnet"
+        }
+
+
+# VM.tf
+
+        resource "azurerm_linux_virtual_machine" "vm" {
+          name                = var.vm_name
+          resource_group_name = azurerm_resource_group.rg.name
+          location            = var.location
+          size                = var.vm_size
+          admin_username      = var.admin_username
+          admin_password      = var.admin_password # In production, replace with SSH key
+        
+          disable_password_authentication = false
+        
+          network_interface_ids = [
+            azurerm_network_interface.nic.id
+          ]
+        
+          os_disk {
+            caching              = "ReadWrite"
+            storage_account_type = "Standard_LRS"
+          }
+        
+          source_image_reference {
+            publisher = "Canonical"
+            offer     = "0001-com-ubuntu-server-jammy"
+          sku       = "22_04-lts-gen2"
+            version   = "latest"
+          }
+        
+          tags = var.tags
+        }
+
+
+
