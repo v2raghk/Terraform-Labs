@@ -1,0 +1,81 @@
+Lab 11 Use Input Variables
+
+# What are Terraform Input Variables?
+
+      Input variables let you make your Terraform code flexible and reusable. 
+      So instead of hardcoding values (like VM name, location, VM size, tags), you can inject them from outside.
+
+      They are defined in variables.tf file and can be set by:
+
+          Default values
+          .tfvars files
+          CLI (-var or -var-file)
+          Environment variables
+
+# Example: Defining Variables (variables.tf)
+
+        variable "location" {
+          description = "Azure region to deploy resources"
+          type        = string
+          default     = "West UK"
+        }
+        
+        variable "resource_group_name" {
+          description = "Name of Resource Group"
+          type        = string
+        }
+        
+        variable "environment" {
+          description = "Deployment environment (e.g., dev, staging, prod)"
+          type        = string
+          default     = "dev"
+        }
+        
+        variable "vm_size" {
+          description = "Size of Virtual Machine"
+          type        = string
+          default     = "Standard_B1s"
+        }
+      
+        variable "tags" {
+          description = "Tags to apply to all resources"
+          type        = map(string)
+          default     = {
+            Project = "TerraformLab"
+          }
+        }
+
+# Providing Values to Input Variables
+
+      We can use terraform.tfvars file to provide the values of input variables.
+
+      This file gives values to your variables:
+
+        resource_group_name = "tf-lab-rg"
+        location            = "East US"
+        environment         = "dev"
+        vm_size             = "Standard_B2s"
+        tags = {
+          Project     = "TerraformLab"
+          Environment = "dev"
+          Owner       = "owner@email.com"
+        }
+
+# Use Variables in main.tf
+
+        resource "azurerm_resource_group" "rg" {
+          name     = var.resource_group_name
+          location = var.location
+          tags     = var.tags
+        }
+
+# Best Practices
+
+      Keep all variables in variables.tf with type & description.
+      Use terraform.tfvars for defaults.
+      Use prod.tfvars, dev.tfvars, etc. for environment separation.
+      Never hardcode sensitive values—use variables + secrets backend (e.g., Azure Key Vault).
+
+
+
+👉 Would you like me to also show you Terraform input variables for sensitive values (like VM admin password or SSH key) with sensitive = true? That way you see how Terraform hides them from logs.
