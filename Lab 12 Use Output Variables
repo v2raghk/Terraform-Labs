@@ -1,4 +1,4 @@
-Lab 11 Use Output Variables
+Lab 12 Use Output Variables
 
 Output variables are used to export values from Terraform configuration so that they can be:
 
