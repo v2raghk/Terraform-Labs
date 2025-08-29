@@ -1,0 +1,12 @@
+Lab 16 Advanced Terraform Commands
+
+terraform fmt: It formats Terraform configuration files according to the standard conventions.
+terraform validate: It checks the syntax and internal consistency of configuration files.
+
+terraform state show <resource>. It shows detailed information for a resource in the state.
+terraform state rm <resource>: IT removes a resource from the state file.
+
+terraform state mv <source> <destination>. It moves/renames resources in state.
+terraform import <resource> <id>. It is used to add existing infrastructure under Terraform management.
+
+terraform 
