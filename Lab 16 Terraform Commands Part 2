@@ -17,9 +17,8 @@ terraform output: It prints outputs from the Terraform state.
 terraform apply -auto-approve: It applies changes without asking for the confirmation from user.
 terraform apply -replace: It recreates a specific resource by replacing the resource..
 
-terraform apply -refresh-only: It updates terraform state to match real world infrastructure without making changes. If something in your infrastructure
-    was changed outside Terraform, e.g. manually updating VM tag running: terraform apply -refresh-only, this command will detect the drift and update
-    Terraform state to reflect the actual current values, without applying any configuration changes.
+terraform apply -refresh-only: If something in your infrastructure changes outside Terraform, e.g. manually updating VM tag running: it will detect 
+the drift and update to reflect the actual current values, without applying any configuration changes.
 terraform mv: It moves resources in state from one address to another. It renames resources in the state, avoiding unnecessary destruction and re-creation.
 
 terraform plan -out=filename: It creates and saves an execution plan to a file.
