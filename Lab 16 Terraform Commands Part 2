@@ -1,0 +1,33 @@
+Lab 16 Advanced Terraform Commands
+
+terraform fmt: It formats Terraform configuration files according to the standard conventions.
+terraform validate: It checks the syntax and internal consistency of configuration files.
+
+terraform state show <resource>: It shows detailed information for a resource in the state.
+terraform state rm <resource>: It removes a resource from the state file.
+
+terraform state mv <source> <destination>: It moves/renames resources in state.
+terraform import <resource> <id>: It is used to add existing infrastructure under Terraform management.
+
+terraform console: It opens an interactive shell to evaluate Terraform expressions.
+terraform version: It displays the installed Terraform version.
+
+terraform output: It prints outputs from the Terraform state.
+
+terraform apply -auto-approve: It applies changes without asking for the confirmation from user.
+terraform apply -replace: It recreates a specific resource by replacing the resource..
+
+terraform apply -refresh-only: It updates terraform state to match real world infrastructure without making changes. If something in your infrastructure
+    was changed outside Terraform, e.g. manually updating VM tag running: terraform apply -refresh-only, this command will detect the drift and update
+    Terraform state to reflect the actual current values, without applying any configuration changes.
+terraform mv: It moves resources in state from one address to another. It renames or re-parents resources in the state, 
+    avoiding unnecessary destruction and re-creation.
+
+terraform plan -out=filename: It creates and saves an execution plan to a file.
+terraform destroy -auto-approve: It destroys all managed infrastructure without asking for a confirmation. Use with caution.
+
+terraform state list: IT lists all resources in Terraform state.
+terraform state show: It shows details of a resource in the state.
+
+terraform login: It authenticates Terraform with Terraform Cloud/Enterprise.
+terraform refresh=false: It runs plan/apply without refreshing state from real infrastructure.
