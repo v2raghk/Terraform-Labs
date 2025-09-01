@@ -72,7 +72,5 @@ Expected Outcomes: What you should have accomplished upon completing the lab.
 
 We welcome contributions to enhance and expand the labs. If you have suggestions, improvements, or additional labs to add, please fork the repository and submit a pull request. Ensure that your contributions align with the existing structure and maintain clarity for beginners.
 
+All code in this repository is open-source and licensed under the MIT License.
 
-
-This repository is licensed under the MIT License. See the LICENSE
- file for more information.
