@@ -11,8 +11,11 @@ The repository is organized into the following directories:
 Terraform-Labs/
 ├── Beginners Labs/
 │   ├── Lab 01/Authenticate Terraform with Azure using Service Principal & Client Secret
+
 │   ├── Lab 02/Create Resource Group in Azure Using Terraform
+
 │   ├── Lab 03/Create Storage Account in Azure Using Terraform
+
 │   ├── Lab 04/Terraform Statefile
 │   ├── Lab 05/Create Directory Structure for TF Files
 │   ├── Lab 06/Add Storage Container and Upload Blob
