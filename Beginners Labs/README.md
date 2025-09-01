@@ -2,20 +2,39 @@
 
 Welcome to Terraform Beginners Labs repository! 
 
-This repository is for anyone who wants to learn Infrastructure as Code (IaC) using Terraform. Whether you’re new to IaC and cloud computing or just want to strengthen your basics, these labs give you hands-on practice to create, manage, and scale cloud infrastructure step by step.
+A structured set of hands-on labs for learning Terraform and Infrastructure as Code (IaC). These labs are organized to help beginners understand Terraform concepts and build practical cloud infrastructure skills step by step.
+
+Repository Structure
+
+The repository is organized into the following directories:
+
+Terraform-Labs/
+├── Beginners Labs/
+│   ├── Lab 01/Authenticate Terraform with Azure using Service Principal & Client Secret
+│   ├── Lab 02/Create Resource Group in Azure Using Terraform
+│   ├── Lab 03/Create Storage Account in Azure Using Terraform
+│   ├── Lab 04/Terraform Statefile
+│   ├── Lab 05/Create Directory Structure for TF Files
+│   ├── Lab 06/Add Storage Container and Upload Blob
+│   ├── Lab 07/terraform.tfvars and variables.tf
+│   ├── Lab 08/Explicit Dependency using Depends_on
+│   ├── Lab 09/Create Virtual Network in Azure
+│   ├── Lab 11/Use Input Variables
+│   ├── Lab 12/Use Output Variables
+│   ├── Lab 13/Create Windows Virtual Machine
+│   ├── Lab 14/Use Input Variables
+│   ├── Terraform Commands Part 1
+│   ├── Terraform Commands Part 2
+│   └── README.md
 
 📘 What You'll Learn
 
 Through these labs, you'll gain practical experience in:
 
 Terraform Basics: Understanding the core concepts and syntax of HashiCorp Configuration Language (HCL).
-
 Infrastructure Provisioning: Automating the deployment of cloud resources such as compute instances, storage, and networking components.
-
 State Management: Learning how Terraform manages infrastructure state and how to handle state files securely.
-
 Modules and Reusability: Structuring your Terraform code for scalability and maintainability using modules.
-
 Version Control Integration: Integrating Terraform with Git for version-controlled infrastructure management.
 
 🛠️ Prerequisites
@@ -23,11 +42,8 @@ Version Control Integration: Integrating Terraform with Git for version-controll
 Before diving into the labs, ensure you have the following:
 
 A basic understanding of cloud computing concepts.
-
 Familiarity with command-line interfaces.
-
 An active account with a cloud provider (e.g., AWS, Azure, GCP).
-
 Terraform installed on your local machine. If not, follow the installation guide
  for your operating system.
 
