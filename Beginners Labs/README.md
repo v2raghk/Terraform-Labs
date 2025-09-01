@@ -10,25 +10,12 @@ The repository is organized into the following directories:
 
 Terraform-Labs/
 ├── Beginners Labs/
-│   ├── Lab 01/Authenticate Terraform with Azure using Service Principal & Client Secret
+│   ├── Lab 01
+│   ├── Lab 02
+│   ├── Lab 03
+and so on.
 
-│   ├── Lab 02/Create Resource Group in Azure Using Terraform
-
-│   ├── Lab 03/Create Storage Account in Azure Using Terraform
-
-│   ├── Lab 04/Terraform Statefile
-│   ├── Lab 05/Create Directory Structure for TF Files
-│   ├── Lab 06/Add Storage Container and Upload Blob
-│   ├── Lab 07/terraform.tfvars and variables.tf
-│   ├── Lab 08/Explicit Dependency using Depends_on
-│   ├── Lab 09/Create Virtual Network in Azure
-│   ├── Lab 11/Use Input Variables
-│   ├── Lab 12/Use Output Variables
-│   ├── Lab 13/Create Windows Virtual Machine
-│   ├── Lab 14/Use Input Variables
-│   ├── Terraform Commands Part 1
-│   ├── Terraform Commands Part 2
-│   └── README.md
+Each lab is designed to gradually increase in complexity. You can work through them sequentially to steadily build your Terraform skills and expertise.
 
 📘 What You'll Learn
 
