@@ -1,0 +1,82 @@
+Lab 10 Module for Resource Group
+
+Folder Structure
+
+Create a folder named terraform on C Drive. In Terraform folder, create 2 files:
+
+    •	Main.tf
+    •	Provider.tf
+ 
+Under C:/terraform folder, create a folder named resourcegroup. Under resourcegroup, create 3 terraform files:
+
+    •	Output.tf
+    •	Resourcegroup.tf
+    •	Variable.tf
+ 
+Under resourcegroup, create 3 terraform files:
+
+variables.tf
+
+    variable "resource_group_name" {
+        type = string
+    }
+    variable "location" {
+      type = string
+    }
+ 
+resourcegroup.tf
+
+    resource "azurerm_resource_group" "rgname" {
+        name = var.resource_group_name
+        location = var.location
+    }
+ 
+Output.tf
+
+    output "rg_name_output" {
+      value = azurerm_resource_group.rgname.name
+    }
+
+    output "location_output" {
+      value= azurerm_resource_group.rgname.location
+    }
+ 
+We have created our module named resourcegroup and added 3 terraform files in our module. 
+
+Go to root main.tf file.
+
+ Main.tf   # Root main.tf file
+
+    module "resourcegroup" {
+      source = "./resourcegroup"
+      resource_group_name = "RK" # Declare the variable and call the variable defined in modules section
+      location = "UK West"
+    }
+ 
+Provider.tf   # Root provider.tf file
+
+    terraform {
+      required_providers {
+        azurerm = {
+          source = "hashicorp/azurerm"
+          version = "~>4.38.0"
+        }
+      }
+    }
+    provider "azurerm" {
+      # Configuration options
+      features {
+        }
+    }
+
+Run 
+terraform init
+terraform plan
+terraform apply
+
+This will create a resource group named RK
+
+ 
+ 
+ 
+
