@@ -2,6 +2,8 @@
 
 Welcome to Terraform Beginners Labs repository! 
 
+Happy Terraforming Everyone
+
 A structured set of hands-on labs for learning Terraform and Infrastructure as Code (IaC). These labs are organized to help beginners understand Terraform concepts and build practical cloud infrastructure skills step by step.
 
 Repository Structure
